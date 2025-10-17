@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🎉 مبروك آية محمد 🎉</title>
+<style>
+:root {
+  --main: #ff78c4;
+  --light: #ffe6f2;
+  --text: #333;
+}
+body {
+  background: linear-gradient(135deg, #fff0f8, #ffe6f2);
+  font-family: 'Tajawal', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
+.card {
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 0 40px rgba(255,120,196,0.3);
+  text-align: center;
+  padding: 40px 30px;
+  width: 350px;
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+h1 {
+  color: var(--main);
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px rgba(255, 120, 196, 0.4);
+}
+.welcome {
+  font-size: 1.2rem;
+  color: var(--text);
+  background: var(--light);
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 15px rgba(255,120,196,0.2);
+  font-weight: 600;
+  line-height: 1.6;
+}
+input {
+  padding: 10px;
+  border-radius: 15px;
+  border: 2px solid #ffd1ec;
+  width: 80%;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+input:focus {
+  outline: none;
+  border-color: var(--main);
+  box-shadow: 0 0 8px rgba(255,120,196,0.4);
+}
+button {
+  background: var(--main);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 15px;
+  font-weight: bold;
+}
+button:hover {
+  transform: scale(1.05);
+  background: #ff52b1;
+}
+.hidden {
+  display: none;
+}
+.gift-card {
+  background: linear-gradient(135deg, #ffb6e6, #ffc8f0);
+  color: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  box-shadow: 0 0 25px rgba(255,120,196,0.3);
+  animation: fadeIn 1s ease;
+  line-height: 1.8;
+}
+.copy-btn {
+  background: white;
+  color: var(--main);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.copy-btn:hover {
+  background: var(--main);
+  color: white;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="mainCard">
+  <h1>🎀 تهانينا آية محمد 🎀</h1>
+  <div class="welcome">
+    💖 مرحبًا بالفائزة المتألقة آية محمد 💖<br>
+    حضورك يملأ المكان بهجة وسرورًا ✨<br>
+    لقد فزتِ معنا اليوم بجائزة رائعة من <b>عائلة نعومة</b> 🎁🌸
+  </div>
+
+  <p style="font-weight:bold;">الرجاء إدخال رمز الكرت الخاص بك:</p>
+  <input type="text" id="codeInput" placeholder="أدخل رقم الكرت هنا">
+  <br>
+  <button id="enterBtn">🎁 جائزتك</button>
+</div>
+
+<script>
+const correctCode = "150015";
+const cardNumber = "9926356128494 120";
+const mainCard = document.getElementById("mainCard");
+const userTried = localStorage.getItem("tried");
+
+if (userTried === "true") {
+  mainCard.innerHTML = `
+    <h1>🚫 نحن نعتذر</h1>
+    <p style="font-size:1.1rem;">لقد تم استخدام المحاولة مسبقًا ولا يمكنك الدخول مرة أخرى 💔</p>
+  `;
+} else {
+  document.getElementById("enterBtn").addEventListener("click", () => {
+    const userCode = document.getElementById("codeInput").value.trim();
+    if (userCode === correctCode) {
+      localStorage.setItem("tried", "true");
+      mainCard.innerHTML = `
+        <h1>🎉 مبروك آية محمد 🎉</h1>
+        <div class="gift-card">
+          🌟 تهانينا الكبيرة يا آية محمد 🌟<br><br>
+          لقد تم التحقق من رمزك بنجاح 💖<br>
+          <b>هذا هو كرت جائزتك:</b><br><br>
+          <div id="cardNumber" style="background:white;color:#ff52b1;padding:10px;border-radius:10px;font-weight:bold;">${cardNumber}</div>
+          <button class="copy-btn" id="copyBtn">📋 نسخ الكرت</button><br><br>
+          🎁 نُبارك لكِ الفوز ونتمنى لكِ مزيدًا من التألق 🌸
+        </div>
+      `;
+      document.getElementById("copyBtn").addEventListener("click", () => {
+        navigator.clipboard.writeText(cardNumber);
+        alert("✅ تم نسخ رقم الكرت بنجاح!");
+      });
+    } else {
+      localStorage.setItem("tried", "true");
+      mainCard.innerHTML = `
+        <h1>😢 نحن نعتذر</h1>
+        <p style="font-size:1.1rem;">الرمز الذي أدخلته غير صحيح، ولا يمكنك المحاولة مرة أخرى.</p>
+      `;
+    }
+  });
+}
+</script>
+
+</body>
+</html>
